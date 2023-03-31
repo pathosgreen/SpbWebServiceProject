@@ -1,5 +1,6 @@
 package com.jojoldu.book.springboot.config.auth;
 
+import com.jojoldu.book.springboot.domain.user.User;
 import com.jojoldu.book.springboot.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -27,6 +28,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-        //
+        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+
+        User user = saveOrUpdate(attributes);
     }
 }
